@@ -12,11 +12,17 @@ struct merkel_tree{
     struct merkel_tree *left,*right;
     merkel_tree()
     {
-        key="0";
+        key="0"; // default hash value of node.
         value=-1;
         left=right=NULL;
     }
 };
+
+//Function to generate hash value.
+string generateHashValue()
+{
+	return "1";
+}
 
 //Function to make parent key = combination of all child keys
 string generateHeadKey(int st_index,int en_index,merkel_tree *root)
@@ -55,7 +61,7 @@ string insert_value(int val,struct merkel_tree* root,int st_index,int en_index,i
     {
    	cout<<"Value inserted "<<val<<"\n";
         root->value=val;
-        return root->key="1";
+        return root->key=generateHashValue();
     }
     int mid=(en_index+st_index-1)/2;
     return root->key=insert_value(val,root->left,st_index,mid,req_index)+insert_value(val,root->right,mid+1,en_index,req_index);
@@ -150,6 +156,12 @@ void displayTransactionUtil(merkel_tree *head)
     displayTransaction(1,max_tree_size,head,n);
 }
 
+//Function to get HeadKey 
+string getHeadKey(merkel_tree *head)
+{
+    return head->key;
+}
+
 //main function
 int main() {
     int capacity;
@@ -166,25 +178,24 @@ int main() {
     while(!flag)
     {
         flag=0;
-        cout<<"Enter your query:\n 1-Insert new value\n 2-Display all happened transactions\n 3-Display All Transactions \n 4-Display Nth Transaction\n 5-exit\n";
+        cout<<"Enter your query:\n 1-Insert new value\n 2-Display all happened transactions\n 3-Display All Transactions \n 4-Display Nth Transaction\n 5-Get Head Key\n 6-exit\n";
         int ans;
+        cout<<"Enter your choice: ";
         cin>>ans;
         cout<<"\n";
         switch(ans)
         {
-            case 1: insert_value_util(head);
-                    break;
+            case 1: insert_value_util(head);break;
             case 2: displayAllHappenUtil(head);break;
             case 3: displayAllUtil(head);break;
             case 4: displayTransactionUtil(head);break;
-            case 5:flag=1;break;
+            case 5: cout<<getHeadKey(head)<<"\n";break;
+            case 6: flag=1;break;
             default:"Invalid Input\n";
         }
     }
     return 0;
 }
-
-
 /*
 Logic Used-
 Ask user for the maximum capacity he requires. Generate tree such tha number of leaf nodes= 2^x such that 2^x>= required capacity. 
