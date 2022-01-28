@@ -1,9 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Global variables to store maximum size and cur size of the merkel tree.
 int max_tree_size;
 int cur_tree_size=0;
 
+// Merkel Tree Structure
 struct merkel_tree{
     string key;
     int value;
@@ -16,6 +18,7 @@ struct merkel_tree{
     }
 };
 
+//Function to make parent key = combination of all child keys
 string generateHeadKey(int st_index,int en_index,merkel_tree *root)
 {
     if(st_index==en_index)
@@ -24,6 +27,7 @@ string generateHeadKey(int st_index,int en_index,merkel_tree *root)
     return root->key=generateHeadKey(st_index,mid,root->left)+generateHeadKey(mid+1,en_index,root->right);
 }
 
+// Function to generate the merkel tree of maximum capacity.
 struct merkel_tree* generate_tree()
 {
     struct merkel_tree *head=  new merkel_tree();
@@ -42,6 +46,7 @@ struct merkel_tree* generate_tree()
     return head;
 }
 
+//Function to insert the value.
 string insert_value(int val,struct merkel_tree* root,int st_index,int en_index,int req_index)
 {
     if(st_index>req_index || req_index>en_index)
@@ -69,6 +74,7 @@ void insert_value_util(merkel_tree *head)
     cout<<head->key<<"\n";
 }
 
+//Function to display inserted/default values of all nodes in merkel tree. 
 void displayAll(int st_index,int en_index,merkel_tree *root)
 {
     if(st_index==en_index)
@@ -87,6 +93,7 @@ void displayAllUtil(merkel_tree *head)
     displayAll(1,max_tree_size,head);
 }
 
+//Function to display only the nodes whose value is inserted by user.
 void displayAllHappen(int st_index,int en_index,merkel_tree *root)
 {
     
@@ -113,7 +120,7 @@ void displayAllHappenUtil(merkel_tree *head)
     displayAllHappen(1,max_tree_size,head);
 }
 
-
+//Function to find value of nth transaction.
 void displayTransaction(int st_index,int en_index,merkel_tree *root,int req_index)
 {
 
@@ -143,8 +150,7 @@ void displayTransactionUtil(merkel_tree *head)
     displayTransaction(1,max_tree_size,head,n);
 }
 
-
-
+//main function
 int main() {
     int capacity;
     cout<<"Enter the maximum capacity of merkel tree ";
@@ -177,3 +183,10 @@ int main() {
     }
     return 0;
 }
+
+
+/*
+Logic Used-
+Ask user for the maximum capacity he requires. Generate tree such tha number of leaf nodes= 2^x such that 2^x>= required capacity. 
+Initially, default key/hash value of all nodes is "0". Whenever a new transaction say nth transaction happens, the key/hash value of nth leaf node becomes "1", hence changing the hash value of entire tree.  
+*/
