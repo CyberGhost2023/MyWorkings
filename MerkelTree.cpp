@@ -1,30 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//Global variables to store maximum size and cur size of the merkel tree.
+//global variables to store max transaction count and current transaction count.
 int max_tree_size;
 int cur_tree_size=0;
 
-// Merkel Tree Structure
+//merkel tree structure
 struct merkel_tree{
     string key;
     int value;
     struct merkel_tree *left,*right;
     merkel_tree()
     {
-        key="0"; // default hash value of node.
+        key="0";//by default hash value of every new node of merkel tree.
         value=-1;
         left=right=NULL;
     }
 };
 
-//Function to generate hash value.
-string generateHashValue()
-{
-	return "1";
-}
-
-//Function to make parent key = combination of all child keys
+//function to make parent key = combination of child keys
 string generateHeadKey(int st_index,int en_index,merkel_tree *root)
 {
     if(st_index==en_index)
@@ -33,7 +27,7 @@ string generateHeadKey(int st_index,int en_index,merkel_tree *root)
     return root->key=generateHeadKey(st_index,mid,root->left)+generateHeadKey(mid+1,en_index,root->right);
 }
 
-// Function to generate the merkel tree of maximum capacity.
+//function to generate new merkel tree
 struct merkel_tree* generate_tree()
 {
     struct merkel_tree *head=  new merkel_tree();
@@ -52,7 +46,12 @@ struct merkel_tree* generate_tree()
     return head;
 }
 
-//Function to insert the value.
+//function to give new hash value when transaction happens
+string getHashValue()
+{
+	return "1";
+}
+//Function to insert new transaction value
 string insert_value(int val,struct merkel_tree* root,int st_index,int en_index,int req_index)
 {
     if(st_index>req_index || req_index>en_index)
@@ -61,7 +60,7 @@ string insert_value(int val,struct merkel_tree* root,int st_index,int en_index,i
     {
    	cout<<"Value inserted "<<val<<"\n";
         root->value=val;
-        return root->key=generateHashValue();
+        return root->key=getHashValue();
     }
     int mid=(en_index+st_index-1)/2;
     return root->key=insert_value(val,root->left,st_index,mid,req_index)+insert_value(val,root->right,mid+1,en_index,req_index);
@@ -76,30 +75,34 @@ void insert_value_util(merkel_tree *head)
     cin>>val;
     cur_tree_size++;
     insert_value(val,head,1,max_tree_size,cur_tree_size);
-    cout<<"Value Successfully Added. New head key is ";
+    cout<<"Value Successfully Inserted. New head key is ";
     cout<<head->key<<"\n";
 }
 
-//Function to display inserted/default values of all nodes in merkel tree. 
-void displayAll(int st_index,int en_index,merkel_tree *root)
+//function to display all leaf nodes of merkel tree.
+void displayAll(merkel_tree *head)
 {
-    if(st_index==en_index)
+    queue<merkel_tree *> q;
+    int counter=1,level=1;
+    q.push(head);
+    while(counter<=max_tree_size)
     {
-        cout<<" Transaction Key: "<<root->key;
-        cout<<"\n Transaction Value: "<<root->value<<"\n";
-        return;
+    	int cnt=counter;
+    	cout<<"Level "<<level<<"\n";
+    	while(cnt--)
+    	{
+    		merkel_tree *pt=q.front();
+    		q.pop();
+    		cout<<pt->key<<"\n";
+    		q.push(pt->left);
+    		q.push(pt->right);
+    	}
+    	level++;
+    	counter*=2;
     }
-    int mid=(en_index+st_index-1)/2;
-    displayAll(st_index,mid,root->left);
-    displayAll(mid+1,en_index,root->right);
 }
 
-void displayAllUtil(merkel_tree *head)
-{
-    displayAll(1,max_tree_size,head);
-}
-
-//Function to display only the nodes whose value is inserted by user.
+//display leaf nodes in which transaction value inserted
 void displayAllHappen(int st_index,int en_index,merkel_tree *root)
 {
     
@@ -126,7 +129,7 @@ void displayAllHappenUtil(merkel_tree *head)
     displayAllHappen(1,max_tree_size,head);
 }
 
-//Function to find value of nth transaction.
+//function to display nth transaction.
 void displayTransaction(int st_index,int en_index,merkel_tree *root,int req_index)
 {
 
@@ -150,16 +153,10 @@ void displayTransactionUtil(merkel_tree *head)
     cin>>n;
     if(n<1 || n>cur_tree_size)
     {
-    	cout<<"\nInvalid Input\n";
+    	cout<<"\nInvalid transaction number\n";
     	return;
     }
     displayTransaction(1,max_tree_size,head,n);
-}
-
-//Function to get HeadKey 
-string getHeadKey(merkel_tree *head)
-{
-    return head->key;
 }
 
 //main function
@@ -178,26 +175,21 @@ int main() {
     while(!flag)
     {
         flag=0;
-        cout<<"Enter your query:\n 1-Insert new value\n 2-Display all happened transactions\n 3-Display All Transactions \n 4-Display Nth Transaction\n 5-Get Head Key\n 6-exit\n";
-        int ans;
+        cout<<"Enter your query:\n 1-Insert new value\n 2-Display all happened transactions\n 3-Display Merkel Tree Level Wise \n 4-Display Nth Transaction\n 5-exit\n";
         cout<<"Enter your choice: ";
+        int ans;
         cin>>ans;
         cout<<"\n";
         switch(ans)
         {
-            case 1: insert_value_util(head);break;
+            case 1: insert_value_util(head);
+                    break;
             case 2: displayAllHappenUtil(head);break;
-            case 3: displayAllUtil(head);break;
+            case 3: displayAll(head);break;
             case 4: displayTransactionUtil(head);break;
-            case 5: cout<<getHeadKey(head)<<"\n";break;
-            case 6: flag=1;break;
+            case 5: flag=1;break;
             default:"Invalid Input\n";
         }
     }
     return 0;
 }
-/*
-Logic Used-
-Ask user for the maximum capacity he requires. Generate tree such tha number of leaf nodes= 2^x such that 2^x>= required capacity. 
-Initially, default key/hash value of all nodes is "0". Whenever a new transaction say nth transaction happens, the key/hash value of nth leaf node becomes "1", hence changing the hash value of entire tree.  
-*/
