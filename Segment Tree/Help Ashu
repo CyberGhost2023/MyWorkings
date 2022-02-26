@@ -1,0 +1,118 @@
+/*
+Question Link- https://www.hackerearth.com/practice/data-structures/advanced-data-structures/fenwick-binary-indexed-trees/practice-problems/algorithm/help-ashu-1/
+
+This question is based on a point update logic in segment tree.
+*/
+
+#include <bits/stdc++.h>
+#define ll int
+#define mod 1000000007
+#define endl "\n"
+#define fast ios::sync_with_stdio(false);cin.tie(0);cout.tie(0)
+#define test ll t;cin>>t;while(t--)
+#define f(n) for(ll i=0;i<n;i++)
+#define rep(i,x,n) for(ll i=x;i<n;i++)
+#define rev(i,x,n) for(ll i=n;i>=x;i--)
+using namespace std;
+
+#define Max 100001
+ll n;
+pair<ll,ll> vt[4*Max];
+
+void create(ll ind,ll st,ll en,ll ar[])
+{
+    if(st==en)
+    {
+        vt[ind].first=ar[st]%2==0?1:0;
+        vt[ind].second=ar[st]%2;
+    }
+    else
+    {
+        ll mid=(st+en)/2;
+        create(2*ind+1,st,mid,ar);
+        create(2*ind+2,mid+1,en,ar);
+        vt[ind].first=vt[2*ind+1].first+vt[2*ind+2].first;
+        vt[ind].second=vt[2*ind+1].second+vt[2*ind+2].second;
+    }
+}
+
+
+void update(ll ind,ll st,ll en,ll upd,ll x)
+{
+
+    if(st==en)
+    {
+        vt[ind].first=x%2==0?1:0;
+        vt[ind].second=x%2;
+    }
+    else
+    {
+        ll mid=(st+en)/2;
+        if(upd<=mid)
+        {
+            update(2*ind+1,st,mid,upd,x);
+        }
+        else
+        {
+            update(2*ind+2,mid+1,en,upd,x);
+
+        }
+        vt[ind].second=vt[2*ind+1].second+vt[2*ind+2].second;
+        vt[ind].first=vt[2*ind+1].first+vt[2*ind+2].first;
+    }
+}
+
+ll findEven(ll ind,ll st,ll en,ll l,ll r)
+{
+    if(r<st || l>en)
+        return 0;
+    if(st>=l && en<=r)
+    return vt[ind].first;
+    else{
+        ll mid=(st+en)/2;
+        return findEven(2*ind+1,st,mid,l,r)+findEven(2*ind+2,mid+1,en,l,r);
+    }
+}
+
+ll findOdd(ll ind,ll st,ll en,ll l,ll r)
+{
+    if(r<st || l>en)
+        return 0;
+    if(st>=l && en<=r)
+    return vt[ind].second;
+    else{
+        ll mid=(st+en)/2;
+        return findOdd(2*ind+1,st,mid,l,r)+findOdd(2*ind+2,mid+1,en,l,r);
+    }
+}
+
+void normal()
+{
+    cin>>n;
+    ll ar[n];
+    f(n)
+    cin>>ar[i];
+    create(0,0,n-1,ar);
+    ll q;
+    cin>>q;
+    f(q)
+    {
+        ll x,y,z;
+        cin>>x>>y>>z;
+        if(x==0)
+        update(0,0,n-1,y-1,z);
+        else if(x==1)
+        cout<<findEven(0,0,n-1,y-1,z-1)<<"\n";
+        else
+        cout<<findOdd(0,0,n-1,y-1,z-1)<<"\n";
+
+
+    }
+    
+}
+
+int main() {
+    fast;
+    normal();
+    return 0;
+}
