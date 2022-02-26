@@ -1,5 +1,8 @@
 //Question Link- https://www.spoj.com/problems/RMQSQ/
 
+/*
+	This is a basic implementation of segment tree to find the minimum of among all in given range l to r.
+*/
 
 #include <bits/stdc++.h>
 #define nl "\n"
