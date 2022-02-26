@@ -1,0 +1,94 @@
+
+#include <bits/stdc++.h>
+#define nl "\n"
+#define fast ios::sync_with_stdio(false);cin.tie(0);cout.tie(0)
+#define test ll t;cin>>t;while(t--)
+#define f(n) for(ll i=0;i<n;i++)
+#define rep(i,x,n) for(ll i=x;i<n;i++)
+#define rev(i,x,n) for(ll i=n;i>=x;i--)
+#define all(v) sort(v.begin(),v.end())
+#define bg(vt) vt.begin()
+#define en(vt) vt.end()
+using namespace std;
+
+
+#define setbit(x) __builtin_popcount(x) //find set bits in x 
+
+#define vll vector<ll>
+#define vpl vector<pair<ll,ll>>
+#define mpl map<pair<ll,ll>>
+#define ump unordered_map<ll,ll>
+#define mpp map<ll,ll> 
+#define mk make_pair
+#define pb push_back
+#define sz(v) (ll)v.size() 
+#define yes cout<<"YES"
+#define no cout<<"NO"
+#define F first
+#define S second
+
+// #define ll int
+#define ll long long
+#define mod 1000000007
+
+const ll Max=1e6,inf=INT_MAX;
+
+ll n;
+ll ar[Max];
+
+
+//Function to create Segment Tree.
+
+ll func1(vll &vt,ll st,ll en,ll ind)
+{
+	if(st==en)
+	{
+		ar[ind]=vt[st];
+		return ar[ind];
+	}
+	ll mid=(st+en)/2;
+	return ar[ind]=min(func1(vt,st,mid,2*ind+1),func1(vt,mid+1,en,2*ind+2));
+}
+
+
+//Function to perform range search as per query.
+ll func2(ll st,ll en, ll cl,ll ce,ll ind)
+{
+	if(st>=cl && en<=ce)
+	return ar[ind];
+	if(cl>en || st>ce)
+	return INT_MAX;
+	ll mid=(st+en)/2;
+	return min(func2(st,mid,cl,ce,2*ind+1),func2(mid+1,en,cl,ce,2*ind+2));
+	
+}
+
+void normtest()
+{
+        ll m,k,pro=1,cnt=0,x,y,z,sum=0;
+        bool flag=0;
+        cin>>n;
+        vll vt(n);
+        f(n)
+        cin>>vt[i];
+        func1(vt,0,n-1,0);
+        
+        
+        cin>>m;
+        f(m)
+        {
+        	cin>>x>>y;
+        	cout<<func2(0,n-1,x,y,0);
+        cout<<nl;
+        }
+        
+}
+
+int main() {
+    fast;
+    // test
+    {
+        normtest();
+    }
+    return 0;
+}
