@@ -1,0 +1,27 @@
+//Question Link- https://leetcode.com/problems/minimum-time-to-complete-trips/
+
+//Time Complexity- O(NlogN)
+
+class Solution {
+public:
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        sort(begin(time),end(time));
+        long long sum=0,st=1,en=1e14;
+        while(st<=en)
+        {
+            long long mid=(st+en)/2,cnt=0;
+            for( auto x:time)
+            {
+                cnt+=(mid/x);
+            }
+            if(cnt>=totalTrips)
+            {
+                sum=mid;
+                en=mid-1;
+            }
+            else st=mid+1;
+        }
+        return sum;
+        
+    }
+};
