@@ -1,0 +1,49 @@
+Question Link- https://leetcode.com/problems/construct-string-with-repeat-limit
+
+Time Complexity- O(N)
+
+class Solution {
+public:
+    string repeatLimitedString(string s, int repeatLimit) {
+     
+        string st="";
+        vector<int> ar(26,0);
+        for(auto x:s)
+        {
+            ar[x-97]++;
+        }
+        
+        for(int i=25;i>=0;i--)
+        {
+            if(ar[i]==0)
+                continue;
+            while(ar[i]>=repeatLimit)
+            {
+                for(int j=0;j<repeatLimit;j++)
+                    st+= (char)(i+97);
+                ar[i]-=repeatLimit;
+                if(ar[i]==0)
+                    break;
+                bool fg=0;
+                for(int j=i-1;j>=0;j--)
+                {
+                    if(ar[j]==0)
+                        continue;
+                    fg=1;
+                    ar[j]-=1;
+                    st+=(char)(j+97);     
+                    break;
+                }
+                if(!fg)
+                    return st;
+            }
+            while(ar[i]>0)
+            {
+                    st+= (char)(i+97);
+                ar[i]--;
+            }
+        }
+        return st;
+    }
+    
+};
