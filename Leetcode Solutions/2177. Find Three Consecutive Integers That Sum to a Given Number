@@ -1,0 +1,19 @@
+/*
+Question Link- https://leetcode.com/problems/find-three-consecutive-integers-that-sum-to-a-given-number/
+
+Time Complexity- O(1)
+*/
+
+class Solution {
+public:
+    vector<long long> sumOfThree(long long num) {
+        vector<long long> v1,vt(3);
+        if(abs(num-3)%3)
+            return v1;
+        
+        vt[0]=(num-3)/3;
+        vt[1]=vt[0]+1;
+        vt[2]=vt[0]+2;
+        return vt;
+    }
+};
