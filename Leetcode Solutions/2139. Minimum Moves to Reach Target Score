@@ -1,0 +1,29 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-moves-to-reach-target-score/
+
+Time Complexity- O(log(tg))
+
+*/
+
+
+class Solution {
+public:
+    int minMoves(int tg, int md) {
+        int sum=0;
+        while(tg>1 && md>0)
+        {
+            if(tg%2)
+            {
+                tg--;
+            }
+            else
+            {
+                tg/=2;
+                md--;
+            }
+            sum++;
+        }
+        sum+=tg-1;
+        return sum;
+    }
+};
