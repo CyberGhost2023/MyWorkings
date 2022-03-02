@@ -1,0 +1,35 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-time-to-finish-the-race/
+*/
+
+class Solution {
+public:
+    int dp[100002],best[100001],max_laps=0;
+    int dfs(int numLaps,int changeTime){
+        if(numLaps==0)
+            return -changeTime;
+        if(!dp[numLaps])
+        {
+            dp[numLaps]=INT_MAX;
+            for(int i=1;i<=min(numLaps,max_laps);i++)
+            dp[numLaps]=min(dp[numLaps],best[i]+changeTime+dfs(numLaps-i,changeTime));
+        }
+        return dp[numLaps];
+    }
+    
+    int minimumFinishTime(vector<vector<int>>& tires, int changeTime, int numLaps) {
+        for(auto &tire:tires)
+        {
+            long long time=tire[0],lap_time=tire[0];
+            for(int lap=1;lap<=numLaps && lap_time<tire[0]+changeTime;lap++)
+            {
+                max_laps=max(lap,max_laps);
+                if(best[lap]==0 || best[lap]>time)
+                    best[lap]=time;
+                lap_time *= tire[1];
+                time+=lap_time;
+            }
+        }
+        return dfs(numLaps,changeTime);
+    }
+};
