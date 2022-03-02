@@ -1,0 +1,24 @@
+/*
+Question Link- https://leetcode.com/problems/partition-array-according-to-given-pivot/
+
+Time Complexity- O(N)
+Space Complexity- O(N)
+2 passes, 1 array solution.
+
+*/
+
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& ar, int pivot) {
+        int n=ar.size(),i,j;
+        int lo=0,eq=count_if(ar.begin(),ar.end(),[&](int x) {return x<pivot;}),hi=eq+count(ar.begin(),ar.end(),pivot);
+        vector<int> res(n);
+        for (auto x:ar)
+        {
+            res[x==pivot?eq++:x<pivot?lo++:hi++]=x;
+        }
+        
+        return res;
+        
+    }
+};
