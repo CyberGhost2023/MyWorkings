@@ -1,0 +1,52 @@
+//Question Link- https://leetcode.com/problems/is-subsequence/
+
+//Time complexity- O(N), where N is length of string t.
+//Space Complexity- O(1).
+
+//Basic approach
+
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int k=0;
+        for(int i=0;i<t.size() && k<s.size();i++)
+        {
+            if(s[k]==t[i])
+                k++;
+        }
+        if(k<s.size())
+        return 0;
+        return 1;
+    }
+};
+
+/*
+follow-up question approach-
+Time Complexity- O(N)+O(K * Xlog?), where N=t.size(), K= number of strings to be checked and X = sizeof a string S.
+Space Complexity- O(N).
+*/
+
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+       unordered_map<char,vector<int>> mp;
+        for(auto i=0;i<t.size();i++)
+        {
+            mp[t[i]].push_back(i);
+        }
+        int prev=-1;
+        for(int i=0;i<s.size();i++)
+        {
+            auto it=mp.find(s[i]);
+            if(it==mp.end())    return false;
+            vector<int> &vt=it->second;
+            auto pos=upper_bound(vt.begin(),vt.end(),prev)-vt.begin();
+            if(pos==vt.size())  return false;
+            prev=vt[pos];
+        }
+        return true;
+    }
+};
+
+
+
