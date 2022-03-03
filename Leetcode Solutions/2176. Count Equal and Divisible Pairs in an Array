@@ -1,0 +1,33 @@
+/*
+Question Link- https://leetcode.com/problems/count-equal-and-divisible-pairs-in-an-array/
+
+Time Complexity- O(NsqrtN)
+
+*/
+
+class Solution {
+public:
+    int countPairs(vector<int>& nums, int k) {
+        unordered_map<int,vector<int>> mp1;
+        for(int i=0;i<nums.size();i++)
+            mp1[nums[i]].push_back(i);
+        long long sum=0;
+        for(auto &[x,vec]:mp1)
+        {
+            unordered_map<int,int> mp2;
+            for(auto i:vec)
+            {
+                long long gcd=__gcd(i,k);
+                for(auto &[gc,cnt]:mp2)
+                {
+                    if((gcd*gc)%k==0)
+                    {
+                        sum+=cnt;
+                    }
+                }
+                mp2[gcd]++;
+            }
+        }
+        return sum;
+    }
+};
