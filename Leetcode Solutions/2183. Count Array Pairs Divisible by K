@@ -1,0 +1,30 @@
+/*
+Question Link- 
+
+Time: O(n * tau(n)), where tau(n) is the number of divisors of n. For n <= 100000, the maximum number of divisors is 128.
+Memory: O(tau(n))
+*/
+
+
+class Solution {
+public:
+    long long countPairs(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        long long sum=0;
+        for(auto x:nums)
+        {
+            long long cur=__gcd(x,k);
+            for( auto &[gcd,cnt]:mp)
+            {
+                if((gcd*cur)%k==0)
+                {
+                    sum+=cnt;
+                }
+            }
+            mp[cur]++;
+        }
+        return sum;
+    }
+    
+};
+
