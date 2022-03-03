@@ -24,7 +24,6 @@ public:
     }
 };
 
-
 // Short code
 
 class Solution {
