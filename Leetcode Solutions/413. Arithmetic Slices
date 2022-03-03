@@ -1,0 +1,36 @@
+/*
+Question Link- https://leetcode.com/problems/arithmetic-slices/
+
+Time Complexity- O(N)
+Space Complexity- O(1)
+*/
+
+
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int n=nums.size(),cnt=0,sum=0;
+        if(n>2)
+        {
+            int pre=nums[1]-nums[0];
+            for(int i=2;i<n;i++)
+            {
+                int cur=nums[i]-nums[i-1];
+                if(cur==pre)
+                {
+                    cnt++;
+                }
+                else
+                {
+                    sum+=cnt*(cnt+1)/2;
+                    pre=cur;
+                    cnt=0;
+                    
+                }
+            }
+                    sum+=cnt*(cnt+1)/2;
+            
+        }
+        return sum;
+    }
+};
