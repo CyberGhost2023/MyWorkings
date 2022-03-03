@@ -4,6 +4,8 @@ Question Link- https://leetcode.com/problems/solving-questions-with-brainpower/
 Time & space Complexity- O(N)
 */
 
+// My Own long one
+
 class Solution {
 public:
     long long solve(vector<vector<int>> &q, int ind,vector<long long> &dp)
@@ -19,5 +21,19 @@ public:
     long long mostPoints(vector<vector<int>>& q) {
         vector<long long> dp(q.size(),-1);
         return solve(q,0,dp);
+    }
+};
+
+
+// Short code
+
+class Solution {
+public:
+    long long mostPoints(vector<vector<int>>& q) {
+        vector<long long> dp(300005,0);
+        int n=q.size();
+        for(int i=n-1;i>=0;i--)
+            dp[i]=max(q[i][0]+dp[i+q[i][1]+1],dp[i+1]);
+        return dp[0];
     }
 };
