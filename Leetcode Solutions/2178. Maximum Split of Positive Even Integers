@@ -1,0 +1,24 @@
+/*
+Question Link- https://leetcode.com/problems/maximum-split-of-positive-even-integers/
+
+*/
+
+class Solution {
+public:
+    vector<long long> maximumEvenSplit(long long fs) {
+        long long sum=2,cur=2;
+        vector<long long> vt;
+        if(fs%2)
+            return vt;
+        while(sum<=fs)
+        {
+            vt.push_back(cur);
+            cur+=2;
+            sum+=cur;
+        }
+        sum-=cur;
+        fs -=sum;
+        vt.back()+=fs;
+        return vt;        
+    }
+};
