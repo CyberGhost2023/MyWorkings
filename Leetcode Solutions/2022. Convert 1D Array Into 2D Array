@@ -1,0 +1,26 @@
+/*
+Question Link- https://leetcode.com/problems/check-if-string-is-a-prefix-of-array/
+
+Time Complexity- O(m*n)
+*/
+
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& o, int m, int n) {
+           vector<vector<int>> v,vt(m,vector<int>(n));
+        if(m*n !=o.size())
+            return v;
+        int i=0,j=0;
+        for(auto x:o)
+        {
+            vt[i][j]=x;
+            j++;
+            if(j==n)
+            {
+                j=0;
+                i++;
+            }
+        }
+        return vt;
+    }
+};
