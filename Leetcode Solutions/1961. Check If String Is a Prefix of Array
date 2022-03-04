@@ -5,15 +5,13 @@ Question Link- https://leetcode.com/problems/check-if-string-is-a-prefix-of-arra
 class Solution {
 public:
     bool isPrefixString(string s, vector<string>& words) {
-        int i=0;
+        string st="";
         for(auto x:words)
         {
-            if((s.size()-i)<x.size() || s.substr(i,x.size())!=x)
-                return 0;
-            i+=x.size();
-            if(i==s.size())
-                return 1;
+            st+=x;
+            if(st.size()>=s.size())
+                break;
         }
-        return 0;
+        return st==s;
     }
 };
