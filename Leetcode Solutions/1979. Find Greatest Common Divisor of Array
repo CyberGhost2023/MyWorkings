@@ -4,6 +4,7 @@ Question Link- https://leetcode.com/problems/find-greatest-common-divisor-of-arr
 Time Complexity- O(min(x,y)), where x and y are min and max element respectively.
 */
 
+
 class Solution {
 public:
     int findGCD(vector<int>& nums) {
