@@ -1,0 +1,29 @@
+/*
+Question Link- https://leetcode.com/problems/champagne-tower/
+
+Time Complexity- O(1e4)
+
+*/
+
+class Solution {
+public:
+    double champagneTower(int p, int r, int c) {
+        vector<double> vt(102,0);
+        int cnt=1;
+        vt[0]=p;
+        while(r--)
+        {
+            vector<double> tp;
+            tp.push_back(max((vt[0]-1)/2,(double)0));
+            for(int i=1;i<cnt;i++)
+            {
+                tp.push_back(max((vt[i]-1)/2,(double)0)+max((vt[i-1]-1)/2,(double)0));
+            }
+            tp.push_back(tp[0]);
+            for(int i=0;i<tp.size();i++)
+                vt[i]=tp[i];
+            cnt++;
+        }
+        return min(vt[c],(double)1);
+    }
+};
