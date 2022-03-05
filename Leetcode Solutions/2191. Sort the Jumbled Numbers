@@ -1,0 +1,39 @@
+/*
+Question Link- 2191. Sort the Jumbled Numbers
+
+
+*/
+
+class Solution {
+public:
+    vector<int> sortJumbled(vector<int>& mp, vector<int>& ar) {
+        int n=ar.size();
+        map<int,vector<int>> mpp;
+        vector<int> vt;
+        for(int i=0;i<n;i++)
+        {
+            int x=ar[i],sum=0,p=1;
+            if(ar[i]==0)
+            {
+                sum=mp[0];
+            }
+            while(x)
+            {
+                int cur=x%10;
+                sum+=mp[cur]*p;
+                p*=10;
+                x/=10;
+            }
+            cout<<sum<<"\n";
+            mpp[sum].push_back(ar[i]);
+        }
+        for(auto x:mpp)
+        {
+            for(auto y:x.second)
+            {
+                vt.push_back(y);
+            }
+        }
+        return vt;
+    }
+};
