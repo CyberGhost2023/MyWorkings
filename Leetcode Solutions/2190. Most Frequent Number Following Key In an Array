@@ -1,0 +1,28 @@
+/*
+Question Link- https://leetcode.com/problems/most-frequent-number-following-key-in-an-array/
+
+Time and space complexity- O(N)
+*/
+
+class Solution {
+public:
+    int mostFrequent(vector<int>& nums, int key) {
+        int val=0,mx=0;
+        map<int,int> mp;
+        for(int i=1;i<nums.size();i++)
+        {
+            // for every element check if the previous element is key, if yes increase the count of that number in map
+            if(nums[i-1]==key )
+            {
+                mp[nums[i]]++;
+            }
+            if(mp[nums[i]]>mx)
+            {
+                 // find the value with max times having key as previous element and store it
+                mx=mp[nums[i]];
+                val=nums[i];
+            }
+        }
+        return val;                  
+    }
+};
