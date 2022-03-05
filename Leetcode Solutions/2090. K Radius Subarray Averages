@@ -1,0 +1,47 @@
+/*
+Question Link- https://leetcode.com/problems/k-radius-subarray-averages/
+
+*/
+
+// Solution Using prefix sum
+
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<long long> vs(n+1,0);
+        vector<int> vt(n,-1);
+        for(int i=1;i<=n;i++)
+            vs[i]=vs[i-1]+nums[i-1];
+        for(int i=k;i<(n-k);i++)
+        {
+            vt[i]=(vs[i+k+1]-vs[i-k])/(2*k+1);
+        }
+        return vt;
+    }
+};
+
+//solution using sliding window
+
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<int> vt(n,-1);
+        long long int j=0,sum=0;
+        if(2*k+1>n)
+            return vt;
+        for(;j<2*k+1;j++)
+        {
+            sum+=nums[j];
+        }
+        vt[k]=sum/(2*k+1);
+        for(int i=k+1;j<n;i++,j++)
+        {
+            sum+=nums[j]-nums[j-2*k-1];
+            vt[i]=sum/(2*k+1);
+        }
+            return vt;
+    }
+};
+
