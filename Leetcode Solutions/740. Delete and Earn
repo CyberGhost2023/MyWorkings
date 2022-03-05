@@ -1,0 +1,22 @@
+/*
+Question Link- https://leetcode.com/problems/delete-and-earn/
+
+Time and Space Complexity- O(1e4)
+
+*/
+
+class Solution {
+public:
+    int deleteAndEarn(vector<int>& nums) {
+        vector<int> dp(1e4+3,0);
+        for(auto x:nums)
+        {
+            dp[x]++;
+        }
+        for(int i=1e4;i>=1;i--)
+        {
+            dp[i]=max(dp[i]*i+dp[i+2],dp[i+1]);
+        }
+        return dp[1];
+    }
+};
