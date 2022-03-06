@@ -1,0 +1,42 @@
+/*
+Question Link- https://leetcode.com/problems/append-k-integers-with-minimal-sum/
+
+*/
+
+class Solution {
+public:
+    long long minimalKSum(vector<int>& nums, int k) {
+        
+        long long sum=k*(long long)(k+1)/2,i=0,x=k+1,cnt=0,pre=0;
+        sort(nums.begin(),nums.end());
+        set<long long> st;
+        for(i=0;i<nums.size();i++)
+        {
+            if(nums[i]>k)
+                break;
+            pre=st.size();
+            st.insert(nums[i]);
+            if((long long)st.size()==pre+1)
+            {
+                cnt++;
+                sum-=nums[i];
+            }
+        }
+        while(cnt>0)
+        {
+            if(i>=nums.size() || nums[i]!=x)
+            {
+                cnt--;
+                sum+=x;
+            }
+            else{
+                while(i<nums.size() && nums[i]==x)
+                    i++;            
+            }
+                x++;
+            
+        }
+        return sum;
+        
+    }
+};
