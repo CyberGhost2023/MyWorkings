@@ -1,0 +1,32 @@
+/*
+Question Link- https://leetcode.com/problems/max-consecutive-ones-iii/
+*/
+
+class Solution {
+public:
+    int longestOnes(vector<int>& ak, int k) {
+        int n=ak.size(),tot1=0,mx=0;
+        for(int i=0,j=0;i<n;i++)
+        {
+            if(ak[i]==1)
+                tot1++;
+            else if(k>0)
+            {
+                k--;
+                tot1++;
+            
+            }
+            else
+            {
+                while(ak[j]!=0 && j<i)
+                {
+                    j++;
+                    tot1--;
+                }
+                j++;
+            }
+            mx=max(tot1,mx);
+        }
+        return mx;
+    }
+};
