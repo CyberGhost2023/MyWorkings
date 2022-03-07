@@ -1,0 +1,9 @@
+/*
+Question Link- https://leetcode.com/problems/count-all-valid-pickup-and-delivery-options/
+*/
+class Solution {
+public:
+    int countOrders(int n, long long res=1) {
+        return n?countOrders(n-1,(res*(n*2-1)*n) %(long long)(1e9+7)):res;        
+    }
+};
