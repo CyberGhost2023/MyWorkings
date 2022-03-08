@@ -1,0 +1,22 @@
+/*
+Question Link- https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/
+*/
+
+class Solution {
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        int ind1=-1,ind2=-1,cnt=0;
+        for(int i=0;i<s1.size();i++)
+        {
+            if(s1[i]!=s2[i])
+            {
+                cnt++;
+                if(cnt==1)
+                ind1=i;
+                else 
+                    ind2=i;
+            }
+        }
+        return cnt!=0 && cnt!=2?0:cnt==0?1:(s1[ind1]==s2[ind2])&& s1[ind2]==s2[ind1]?1:0;
+    }
+};
