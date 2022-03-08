@@ -1,5 +1,8 @@
 /*
 Question Link- https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/
+
+Time Complexity- O(n)
+
 */
 
 class Solution {
