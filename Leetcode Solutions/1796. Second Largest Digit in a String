@@ -1,0 +1,27 @@
+/*
+Question Link- https://leetcode.com/problems/second-largest-digit-in-a-string/
+*/
+
+class Solution {
+public:
+    int secondHighest(string s) {
+        set<int> st;
+        for(auto x:s)
+        {
+            if(isdigit(x))
+                st.insert(x-48);
+        }
+        if(st.size()<2)
+            return -1;
+        int cnt=0;
+         for(auto x:st)
+         {
+             cnt++;
+             if(cnt==st.size()-1)
+                 return x;
+         }
+            return -1;
+            
+        
+    }
+};
