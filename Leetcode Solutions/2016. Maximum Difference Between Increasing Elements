@@ -1,0 +1,19 @@
+/*
+Question Link- https://leetcode.com/problems/maximum-difference-between-increasing-elements/
+*/
+
+class Solution {
+public:
+    int maximumDifference(vector<int>& nums) {
+        int dif=-1,mi=nums[0];
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]>mi)
+            {
+                dif=max(nums[i]-mi,dif);
+            }
+            mi=min(nums[i],mi);
+        }
+        return dif;
+    }
+};
