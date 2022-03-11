@@ -1,0 +1,42 @@
+/*
+Question Link- https://leetcode.com/problems/two-out-of-three/
+*/
+class Solution {
+public:
+    
+    vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) {
+        vector<int> vt,cnt(101,0);
+        int val=1;
+        for(auto x:nums1)
+        {
+            if((cnt[x]&val)==0)
+            cnt[x]^=val; 
+        }
+        val*=2;
+        for(auto x:nums2)
+        {
+            if((cnt[x]&val)==0)
+            cnt[x]^=val; 
+        }
+        val*=2;
+        for(auto x:nums3)
+        {
+            if((cnt[x]&val)==0)
+            cnt[x]^=val; 
+        }
+        for(int i=0;i<101;i++)
+        {
+            int tot=0;
+            while(cnt[i])
+            {
+                if(cnt[i]&1)
+                    tot++;
+                cnt[i]>>=1;
+            }
+            if(tot>1)
+                vt.push_back(i);
+        }
+        return vt;
+        
+    }
+};
