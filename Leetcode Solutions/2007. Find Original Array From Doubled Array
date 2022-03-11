@@ -1,0 +1,44 @@
+/*
+Question Link- https://leetcode.com/problems/find-original-array-from-doubled-array/
+*/
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& ar) {
+        map<int,int> mp;
+        vector<int> vt,vs;
+        for(auto x:ar)
+            mp[x]++;
+        sort(ar.begin(),ar.end());
+        for(auto x:ar)
+        {
+            if(mp[x]<1)
+                continue;
+            if(2*x!=x)
+            {
+                if(mp[2*x]<1)
+                {
+                    return vt;
+                }
+                else 
+                {
+                    mp[x]--,mp[2*x]--;
+                }
+                    
+            }
+            else 
+            {
+                if(mp[x]<2)
+                return vt;
+                else
+                {
+                    mp[x]-=2; 
+                }
+            }
+                    vs.push_back(x);
+            
+        }
+        if(vs.size()*2!=ar.size())
+            return vt;
+        return vs;
+    }
+};
