@@ -1,0 +1,19 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-swaps-to-group-all-1s-together-ii/
+*/
+class Solution {
+public:
+    int minSwaps(vector<int>& nums) {
+        int n=nums.size(),ones=count(nums.begin(),nums.end(),1),res=n;
+        for(int i=0,j=0,cnt=0;i<n;i++)
+        {
+            while(j-i<ones)
+            {
+                cnt+=nums[j++%n];
+            }
+            res=min(res,ones-cnt);
+            cnt-=nums[i];
+        }
+        return res;
+    }
+};
