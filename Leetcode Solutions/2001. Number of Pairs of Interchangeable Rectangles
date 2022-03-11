@@ -1,0 +1,21 @@
+/*
+Question Link- https://leetcode.com/problems/number-of-pairs-of-interchangeable-rectangles/
+*/
+
+class Solution {
+public:
+    long long interchangeableRectangles(vector<vector<int>>& r) {
+        map<pair<int,int>,int> mp;
+        long long sum=0;
+        for(auto x:r)
+        {
+            int gcd=__gcd(x[0],x[1]);
+            mp[{x[0]/gcd,x[1]/gcd}]++;
+        }
+        for(auto x:mp)
+        {
+            sum+=(x.second-1)*1ll*(x.second)/2;
+        }
+        return sum;
+    }
+};
