@@ -1,0 +1,36 @@
+/*
+Question Link- https://leetcode.com/problems/remove-one-element-to-make-the-array-strictly-increasing/
+*/
+
+class Solution {
+public:
+    bool check(int ind,vector<int> &nums)
+    {
+        int pre=ind==0?nums[1]:nums[0];
+        int i=ind==0?2:1;
+        for(;i<nums.size();i++)
+        {
+            if(ind==i)
+                continue;
+            if(nums[i]<=pre)
+                return 0;
+            pre=nums[i];
+        }
+        return 1;
+    }
+    bool canBeIncreasing(vector<int>& nums) {
+        int ind=-1;
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]<=nums[i-1])
+            {
+                ind=i;
+                break;
+            }
+        }
+        if(ind==-1)
+            return 1;
+        return check(ind,nums) || check(ind-1,nums);
+        
+    }
+};
