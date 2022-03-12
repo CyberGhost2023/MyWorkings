@@ -1,0 +1,15 @@
+/*
+Question Link- https://leetcode.com/problems/build-array-from-permutation/
+*/
+class Solution {
+public:
+    vector<int> buildArray(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> vt(n);
+        for(int i=0;i<n;i++)
+        {
+            vt[i]=nums[nums[i]];
+        }
+        return vt;
+    }
+};
