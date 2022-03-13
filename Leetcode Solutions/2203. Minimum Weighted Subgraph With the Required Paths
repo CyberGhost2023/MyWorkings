@@ -1,0 +1,56 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-weighted-subgraph-with-the-required-paths/
+*/
+
+#define ll long long
+
+class Solution {
+public:
+    void dijkstra(ll s,vector<vector<pair<ll,ll>>> &adj,vector<ll> &d)
+    {
+        ll n=adj.size();
+        d[s]=0;
+        priority_queue<pair<ll,ll>,vector<pair<ll,ll>>, greater<pair<ll,ll>>> pq;
+        pq.push({0,s});
+        while(!pq.empty())
+        {
+            ll u=pq.top().second;
+            ll dist=pq.top().first;
+            pq.pop();
+            if(dist!=d[u])
+                continue;
+            for(auto edge:adj[u])
+            {
+                ll to=edge.first;
+                ll len=edge.second;
+                if(d[u]+len<d[to])
+                {
+                    d[to]=d[u]+len;
+                    pq.push({d[to],to});
+                }
+            }
+        }
+    }
+    
+    ll minimumWeight(int n, vector<vector<int>>& edges, int src1, int src2, int dest) {
+        vector<vector<pair<ll,ll>>> adj(n),rev(n);
+        vector<ll> s1d(n,1e15),s2d(n,1e15),dd(n,1e15);
+        for(auto x:edges)
+        {
+            adj[x[0]].push_back({x[1],x[2]});
+            rev[x[1]].push_back({x[0],x[2]});
+        }
+        dijkstra(src1,adj,s1d);
+        dijkstra(src2,adj,s2d);
+        dijkstra(dest,rev,dd); 
+        if(dd[src1]==1e15 || dd[src2]==1e15)
+                return -1;
+        ll ans=LLONG_MAX;
+        for(ll i=0;i<n;i++)
+                {
+                    ans=min(ans,dd[i]+s1d[i]+s2d[i]);
+                }
+        return ans;
+        
+    }
+};
