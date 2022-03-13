@@ -1,0 +1,30 @@
+/*
+Question Link- https://leetcode.com/problems/count-artifacts-that-can-be-extracted/
+*/
+
+class Solution {
+public:
+    int digArtifacts(int n, vector<vector<int>>& art, vector<vector<int>>& dig) {
+        int ar[n][n],cnt=0;
+        memset(ar,0,sizeof(ar));
+        for(auto x:dig)
+        {
+            ar[x[0]][x[1]]=1;
+        }
+        for(auto x:art)
+        {
+            bool flag=0;
+            for(int i=x[0];i<=x[2];i++)
+            {
+                for(int j=x[1];j<=x[3];j++)
+                {
+                    if(ar[i][j]==0)
+                        flag=1;
+                }
+            }
+            if(!flag)
+                cnt++;
+        }
+        return cnt;
+    }
+};
