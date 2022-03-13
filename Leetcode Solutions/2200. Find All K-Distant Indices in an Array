@@ -1,0 +1,24 @@
+/*
+Question Link- https://leetcode.com/problems/find-all-k-distant-indices-in-an-array/
+*/
+class Solution {
+public:
+    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {
+        int n=nums.size();
+        vector<int> vt;
+        int pre=0;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]==key)
+            {
+                for(int j=max(pre,i-k);j<min(i+k+1,n);j++)
+                {
+                    vt.push_back(j);
+                }
+                pre=i+k+1;
+            }
+            
+        }       
+        return vt;
+    }
+};
