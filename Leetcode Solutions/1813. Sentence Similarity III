@@ -1,0 +1,30 @@
+/*
+Question Link- https://leetcode.com/problems/sentence-similarity-iii/
+*/
+
+class Solution {
+public:
+    bool areSentencesSimilar(string s1, string s2) {
+        int i1,i2;
+        stringstream st1(s1);
+        string s;
+        vector<string> vt1,vt2;
+        while(getline(st1,s,' '))
+            vt1.push_back(s);
+        stringstream st2(s2);
+        while(getline(st2,s,' '))
+            vt2.push_back(s);
+        int n1=vt1.size(),n2=vt2.size();
+        for(i1=0,i2=0;i1<n1 && i2<n2 && vt1[i1]==vt2[i2];i1++,i2++);
+        if(i1==n1 || i2==n2)
+            return 1;
+        i1--,i2--;
+        int j1,j2;
+        for(j1=n1-1,j2=n2-1;j1>i1 && j2>i2 && vt1[j1]==vt2[j2];j1--,j2--);
+        if(i1==j1 || i2==j2)
+            return 1;
+        return 0;
+        
+            
+    }
+};
