@@ -1,0 +1,11 @@
+/*
+Question Link- https://leetcode.com/problems/determine-color-of-a-chessboard-square/
+*/
+class Solution {
+public:
+    bool squareIsWhite(string c) {
+        if((c[0]-97+c[1]-48)%2==0)
+            return true;
+        return false;
+    }
+};
