@@ -1,0 +1,43 @@
+/*
+Question Link- https://leetcode.com/problems/maximum-number-of-groups-getting-fresh-donuts/
+*/
+
+class Solution {
+public:
+    map<vector<int>,int> mp;
+    int solve(vector<int>&cnt,int last)
+    {
+        if(mp.find(cnt)!=mp.end())
+        {
+            return mp[cnt];
+        }
+        int res=0,bs=cnt.size();
+        for(int i=1;i<bs;i++)
+        {
+            if(cnt[i]>0)
+            {
+                cnt[i]--;
+                res=max(res, (last==0)+solve(cnt,(bs+last-i)%bs));
+                cnt[i]++;
+            }
+        }
+        return mp[cnt]=res;
+    }
+    int maxHappyGroups(int bs, vector<int>& gs) {
+        vector<int> cnt(bs);
+        int ans=0;
+        for(auto x:gs)
+        {
+            if(x%bs==0)
+                ans++;
+            else if(cnt[bs-x%bs]!=0)
+            {
+                cnt[bs-x%bs]--;
+                ans++;
+            }
+            else 
+                cnt[x%bs]++;
+        }
+        return ans+solve(cnt,0);
+    }
+};
