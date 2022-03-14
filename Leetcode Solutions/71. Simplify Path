@@ -1,0 +1,24 @@
+/*
+Question Link- https://leetcode.com/problems/simplify-path/
+*/
+
+class Solution {
+public:
+    string simplifyPath(string path) {
+        string res="",tmp;
+        vector<string> vt;
+        stringstream ss(path);
+        while(getline(ss,tmp,'/'))
+        {
+            if(tmp=="" || tmp==".")
+                continue;
+            if(tmp==".." && vt.size()>0) vt.pop_back();
+            else if(tmp!="..") vt.push_back(tmp);
+        }
+        for(auto x:vt)
+        {
+            res += "/"+x;
+        }
+        return vt.empty()?"/":res;
+    }
+};
