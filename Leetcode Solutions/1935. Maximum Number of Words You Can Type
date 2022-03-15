@@ -1,0 +1,30 @@
+/*
+Question Link- https://leetcode.com/problems/maximum-number-of-words-you-can-type/
+*/
+
+class Solution {
+public:
+    int canBeTypedWords(string text, string bl){
+     int mp[26]={0};
+    for(auto x:bl)
+        mp[x-'a']=1;
+     stringstream st(text);
+        string sk;
+        int cnt=0;
+        while(getline(st,sk,' '))
+        {
+            bool fg=0;
+            for(auto x:sk)
+            {
+                if(mp[x-'a']!=0)
+                {
+                    fg=1;
+                    break;
+                }
+            }
+            if(!fg)
+                cnt++;
+        }
+        return cnt;
+    }
+};
