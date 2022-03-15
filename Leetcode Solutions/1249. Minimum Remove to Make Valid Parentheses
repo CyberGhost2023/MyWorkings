@@ -1,0 +1,41 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
+*/
+
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string st="";
+        stack<char> ss;
+        stack<string> sk;
+        sk.push("");
+        for(auto x:s)
+        {
+            if(x=='(')
+            {
+                sk.push("");
+                ss.push('(');
+                
+            }
+            else if(x==')')
+            {
+                if(!ss.empty())
+                {
+                    string sp="("+sk.top()+")";
+                    sk.pop();
+                    sk.top()+=sp;
+                    ss.pop();
+                }
+            }
+            else
+                sk.top()+=x;
+        }
+        while(sk.size()>1)
+        {
+         string sp=sk.top();
+                    sk.pop();
+                    sk.top()+=sp;   
+        }
+        return sk.top();
+    }
+};
