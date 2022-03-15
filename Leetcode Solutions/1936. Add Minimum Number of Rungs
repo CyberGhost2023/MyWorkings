@@ -1,0 +1,17 @@
+/*
+Question Link- https://leetcode.com/problems/add-minimum-number-of-rungs/
+*/ 
+class Solution {
+public:
+    int addRungs(vector<int>& rungs, int dist) {
+    int tot=0,pre=0;
+        for(int i=0;i<rungs.size();i++)
+        {
+                int ans=ceil((double)(rungs[i]-pre)/dist);
+                ans--;
+            pre=rungs[i];
+            tot+=ans;
+        }
+        return tot;
+    }
+};
