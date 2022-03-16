@@ -1,0 +1,19 @@
+/*
+Question Link- https://leetcode.com/problems/check-if-the-sentence-is-pangram/
+*/
+class Solution {
+public:
+    bool checkIfPangram(string sentence) {
+        int ar[26]={0};
+        for(auto x:sentence)
+        {
+            ar[x-'a']=1;
+        }
+        for(auto x:ar)
+        {
+            if(x==0)
+                return 0;
+        }
+        return 1;
+    }
+};
