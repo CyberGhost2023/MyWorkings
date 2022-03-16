@@ -1,0 +1,62 @@
+/*
+Question Link- https://leetcode.com/problems/minimum-sideway-jumps/
+*/
+
+// optimized solution with O(10 sc.
+
+class Solution {
+public:
+    int minSideJumps(vector<int>& ob) {
+        int dp[3]={1,0,1};
+        for(auto x:ob)
+        {
+            if(x>0)
+            {
+                dp[x-1]=INT_MAX-1;
+            }
+            for(int i=0;i<3;i++)
+            {
+                if(x!=i+1)
+                {
+                    dp[i]=min(dp[i],1+min(dp[(i+1)%3],dp[(i+2)%3]));
+                }
+            }
+        }
+        return min(min(dp[0],dp[1]),dp[2]);
+    }
+};
+
+// my solution with o(n+1) space complexity.
+#define ll int
+class Solution {
+public:
+    
+    ll solve(ll ind,vector<int> &ob,ll lane,vector<vector<ll>> &dp)
+    {
+        if(ind==ob.size()-1)
+            return 0;
+        if(ob[ind]==lane)
+            return INT_MAX;
+        if(dp[ind][lane]!=-1)
+            return dp[ind][lane];
+        ll ans=INT_MAX;
+        if(ob[ind+1]!=lane)
+        {
+            ans=solve(ind+1,ob,lane,dp);
+        }
+        else
+        {
+            int ltlane=lane-1==0?3:lane-1;
+            int rtlane=lane+1==4?1:lane+1;
+            ans=1+min(solve(ind,ob,ltlane,dp),solve(ind,ob,rtlane,dp));
+        }
+        dp[ind][lane]=ans;
+        return ans;
+            
+    }
+    int minSideJumps(vector<int>& ob) {
+        vector<vector<ll>> dp(ob.size()+1,vector<ll>(4,-1));
+        return solve(0,ob,2,dp);
+        
+    }
+};
