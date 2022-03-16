@@ -1,0 +1,19 @@
+/*
+Question Link- https://leetcode.com/problems/validate-stack-sequences/
+*/
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& ph, vector<int>& pd) {
+        int i=0,j=0;
+        for(auto x:ph)
+        {
+            ph[i]=x;
+            while(i>=0 && ph[i]==pd[j])
+            {
+                i--,j++;
+            }
+            i++;
+        } 
+        return i==0;
+    }
+};
