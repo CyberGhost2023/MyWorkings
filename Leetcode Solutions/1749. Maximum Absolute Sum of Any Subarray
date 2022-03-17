@@ -1,0 +1,17 @@
+/*
+Question Link- https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/
+*/
+
+class Solution {
+public:
+    int maxAbsoluteSum(vector<int>& nums) {
+        int mi=0,mx=0,sum=0;
+        for(auto x:nums)
+        {
+            sum+=x;
+            mx=max(mx,sum);
+            mi=min(mi,sum);
+        }
+        return abs(mx-mi);
+    }
+};
