@@ -1,0 +1,30 @@
+/*
+Question Link- https://leetcode.com/problems/number-of-different-subsequences-gcds/
+*/
+
+class Solution {
+public:
+    int countDifferentSubsequenceGCDs(vector<int>& nums) {
+        vector<int> vt(2e5+1);
+        for(auto x:nums)
+        {
+            for(int i=1;i*i<=x;i++)
+            {
+                if(x%i==0)
+                {
+                    int f1=i;
+                    int f2=x/i;
+                    vt[f1]=__gcd(vt[f1],x);
+                    vt[f2]=__gcd(vt[f2],x);   
+                }
+            }
+        }
+        int cnt=0;
+        for(int i=1;i<2e5+1;i++)
+        {
+            if(vt[i]==i)
+                cnt++;
+        }
+        return cnt;
+    }
+};
