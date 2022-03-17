@@ -1,0 +1,34 @@
+/*
+Question Link- https://leetcode.com/problems/truncate-sentence/
+*/
+
+// optimized approach
+
+class Solution {
+public:
+    string truncateSentence(string s, int k) {
+     for(int i=0;i<s.size();i++)
+     {
+         if(s[i]==' '&& --k==0)
+             return s.substr(0,i);
+     }
+    return s;
+    }
+};
+
+// my sol
+class Solution {
+public:
+    string truncateSentence(string s, int k) {
+     stringstream sb(s);
+    string st,ss="";
+    while(k && getline(sb,st,' '))
+    {
+        k--;
+        if(ss!="")
+            ss+=" ";
+        ss+=st;
+    }
+        return ss;
+    }
+};
